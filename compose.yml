@@ -23,6 +23,7 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
       - DATASOURCE_URL
+      - KAFKA_BOOTSTRAP_SERVER
     ports:
       - "8080:8080"
       - "5005:5005"
