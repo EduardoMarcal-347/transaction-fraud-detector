@@ -1,0 +1,26 @@
+spring:
+  application:
+  name: api
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      format_sql: true
+    jackson:
+      date-format: dd/MM/yyyy HH:mm:ss
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+
+kafka:
+  bootstrap-server: ${KAFKA_BOOTSTRAP_SERVER}
+  topics:
+    transaction: "user.transaction.queue"
+    threshold: "user.transaction.threshold"
+    suspicious: "user.transaction.suspicious"
+
