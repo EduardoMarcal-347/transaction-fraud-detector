@@ -15,6 +15,7 @@ interface FinancialTransactionMapper {
     @Mapping(source = "payerId", target = "payer")
     @Mapping(source = "receiverId", target = "receiver")
     @Mapping(target = "createdAt", expression = "java(java.time.Instant.now())")
+    @Mapping(target = "processedAt", ignore = true)
     @Mapping(target = "status", constant = "ONGOING")
     fun toBean(requestDTO: FinancialTransactionReq): FinancialTransaction
 

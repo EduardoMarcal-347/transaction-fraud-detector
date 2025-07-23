@@ -7,25 +7,25 @@ import java.time.Instant
 
 @Entity
 @Table(name = "financial_transaction")
-data class FinancialTransaction(
+class FinancialTransaction() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int? = null,
+    val id: Int? = null
 
-    var value: Int,
+    var value: Int? = null
 
-    var txLocation: CountryCode,
+    var txLocation: CountryCode? = CountryCode.BR
 
-    val createdAt: Instant? = Instant.now(),
+    var createdAt: Instant? = Instant.now()
 
-    val processedAt: Instant? = null,
+    var processedAt: Instant? = null
 
     @Enumerated(value = EnumType.STRING)
-    val status: TransactionStatus? = TransactionStatus.ONGOING,
+    var status: TransactionStatus? = TransactionStatus.ONGOING
 
     @ManyToOne
-    val payer: User,
+    var payer: User? = null
 
     @ManyToOne
-    val receiver: User
-)
+    var receiver: User? = null
+}

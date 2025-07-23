@@ -11,7 +11,9 @@ interface UserMapper {
     fun toBean(requestDTO: UserReq): User
 
     fun fromId(id: UUID): User {
-        return User(id = id)
+        val user = User()
+        user.id = id
+        return user
     }
 
     companion object {

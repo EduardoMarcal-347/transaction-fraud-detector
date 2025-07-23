@@ -12,15 +12,15 @@ import java.util.UUID
 
 @Entity
 @Table(name = "bank_account")
-data class BankAccount(
+class BankAccount() {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    val id : UUID? = null,
-    val agency : Int,
-    val account: String,
-    val balance: Int,
+    var id : UUID? = null
+    var agency : Int? = null
+    var account: String? = null
+    var balance: Int? = 0
 
     @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
     @JoinColumn(name = "threshold_id")
-    val threshold: Threshold? = null
-)
+    var threshold: Threshold? = null
+}
