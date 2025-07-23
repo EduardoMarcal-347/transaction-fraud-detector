@@ -24,6 +24,7 @@ class KafkaProducerConfig (
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer::class.java.name)
         properties.put(ProducerConfig.LINGER_MS_CONFIG, "20")
+        properties.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false)
         properties.put(ProducerConfig.BATCH_SIZE_CONFIG, Integer.valueOf(32 * 1024).toString())
         properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy")
         return DefaultKafkaProducerFactory(properties)
