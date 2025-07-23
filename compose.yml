@@ -12,13 +12,14 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  app:
+  api:
     image: 'transactions-api:latest'
     build:
       context: ./api
-    container_name: app
+    container_name: api
     depends_on:
       - postgres
+      - kafka1
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
@@ -27,6 +28,19 @@ services:
     ports:
       - "8080:8080"
       - "5005:5005"
+
+  tx-processor:
+    image: 'tx-processor:latest'
+    build:
+      context: ./processor
+    container_name: tx-processor
+    depends_on:
+      - kafka1
+    environment:
+      - KAFKA_BOOTSTRAP_SERVER
+    ports:
+      - "9999:8080"
+      - "5006:5005"
 
   zoo1:
     image: confluentinc/cp-zookeeper:7.8.0
@@ -38,7 +52,11 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_SERVERS: zoo1:2888:3888
-
+    healthcheck:
+      test: [ "CMD-SHELL", "zookeeper-shell localhost:2181 ls / >/dev/null" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   kafka1:
     image: confluentinc/cp-kafka:7.8.0
@@ -57,7 +75,8 @@ services:
       KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
-      - zoo1
+      zoo1:
+        condition: service_healthy
 
   kafka2:
     image: confluentinc/cp-kafka:7.8.0
@@ -76,7 +95,8 @@ services:
       KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
-      - zoo1
+      zoo1:
+        condition: service_healthy
 
 
   kafka3:
@@ -96,7 +116,8 @@ services:
       KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
     depends_on:
-      - zoo1
+      zoo1:
+        condition: service_healthy
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
