@@ -19,8 +19,11 @@ spring:
 
 kafka:
   bootstrap-server: ${KAFKA_BOOTSTRAP_SERVER}
+  consumer:
+    group-id: "api-consumer"
   topics:
     transaction: "user.transaction.queue"
     threshold: "user.transaction.threshold"
     suspicious: "user.transaction.suspicious"
+    processed-tx: "user.transaction.processed"
 
