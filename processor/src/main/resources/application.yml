@@ -1,0 +1,18 @@
+spring:
+  application:
+  name: processor
+  kafka:
+    streams:
+      application-id: tx-processor
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER}
+
+kafka:
+  bootstrap-server: ${KAFKA_BOOTSTRAP_SERVER}
+  streams:
+    application-id: "transactions.processor"
+  topics:
+    transaction: "user.transaction.queue"
+    threshold: "user.transaction.threshold"
+    suspicious: "user.transaction.suspicious"
+    processed-tx: "user.transaction.processed"
+
