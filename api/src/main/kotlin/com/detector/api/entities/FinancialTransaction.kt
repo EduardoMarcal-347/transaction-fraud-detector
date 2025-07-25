@@ -12,16 +12,16 @@ class FinancialTransaction() {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null
 
-    var value: Int? = null
+    var value: Int = 0
 
-    var txLocation: CountryCode? = CountryCode.BR
+    var txLocation: CountryCode = CountryCode.BR
 
-    var createdAt: Instant? = Instant.now()
+    var createdAt: Instant = Instant.now()
 
     var processedAt: Instant? = null
 
     @Enumerated(value = EnumType.STRING)
-    var status: TransactionStatus? = TransactionStatus.ONGOING
+    var status: TransactionStatus = TransactionStatus.ONGOING
 
     @ManyToOne
     var payer: User? = null
