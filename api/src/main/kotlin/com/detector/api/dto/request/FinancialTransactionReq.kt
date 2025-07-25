@@ -1,11 +1,7 @@
 package com.detector.api.dto.request
 
-import com.detector.api.enums.CountryCode
-import java.util.UUID
-
 data class FinancialTransactionReq(
     val value: Double,
-    val txLocation: CountryCode,
-    val payerId: UUID,
-    val receiverId: UUID,
+    val payer: PayerPartyReq,
+    val receiver: ReceiverPartyReq,
 )
