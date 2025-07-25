@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UserService (
+class UserService(
     @Value($$"${kafka.topics.threshold}")
     val thresholdTopic: String,
     val userRepository: UserRepository,
     val kafkaTemplate: KafkaTemplate<String, Any?>,
-){
+) {
 
-    fun createAccount(req: UserReq): User{
+    fun createAccount(req: UserReq): User {
         val user = UserMapper.INSTANCE.toBean(req)
         // validate
         // cast to response
@@ -40,12 +40,6 @@ class UserService (
 
     fun userExists(id: UUID): Boolean {
         return userRepository.existsById(id)
-    }
-
-    fun validateUserExists(id: UUID, transactionRole: String) {
-        if (!userExists(id)) {
-            throw NoSuchElementException("$transactionRole with id $id doesn't exists.")
-        }
     }
 
 }

@@ -12,11 +12,11 @@ import org.mapstruct.factory.Mappers
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 interface FinancialTransactionMapper {
-    @Mapping(source = "payerId", target = "payer")
-    @Mapping(source = "receiverId", target = "receiver")
-    @Mapping(target = "createdAt", expression = "java(java.time.Instant.now())")
-    @Mapping(target = "processedAt", ignore = true)
+    @Mapping(source = "payer.userId", target = "payer")
     @Mapping(target = "status", constant = "ONGOING")
+    @Mapping(target = "createdAt", expression = "java(java.time.Instant.now())")
+    @Mapping(target = "receiver", ignore = true )
+    @Mapping(target = "processedAt", ignore = true)
     fun toBean(requestDTO: FinancialTransactionReq): FinancialTransaction
 
     companion object {
